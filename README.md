@@ -131,8 +131,8 @@ The server includes comprehensive error handling for:
 
 ## License
 
-[Add your license information here]
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Support
 
-For support, please [create an issue](repository-issues-url) or contact the maintainers.
+For support, please [create an issue](https://github.com/CodeByWaqas/MRConfluenceLinker/issues) or contact the maintainers.
