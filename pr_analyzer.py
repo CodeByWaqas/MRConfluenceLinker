@@ -154,6 +154,15 @@ class PRAnalyzer:
             
             logger.info(f"Storing analysis in Confluence for project: {project_id}, MR ID: {mr_id}")
             try:
+                # First verify Confluence access
+                try:
+                    # Test access to the space
+                    self.confluence.get_space(self.confluence_space)
+                    logger.info(f"Successfully verified access to Confluence space: {self.confluence_space}")
+                except Exception as e:
+                    logger.error(f"Failed to access Confluence space: {str(e)}")
+                    raise ValueError(f"Failed to access Confluence space: {str(e)}")
+
                 # If no MR ID provided, fetch all MRs
                 if mr_id is None:
                     mr_details = await fetch_mr_details(project_id)
@@ -173,17 +182,31 @@ class PRAnalyzer:
                             """
                         
                         page_title = f"MR Summary - {project_id}"
-                        parent_id = self.confluence.get_page_id(self.confluence_space, "PR Analysis Reports")
-                        
-                        page = self.confluence.create_page(
-                            space=self.confluence_space,
-                            title=page_title,
-                            body=content,
-                            parent_id=parent_id
-                        )
-                        
-                        logger.info(f"Successfully created Confluence summary page: {page_title}")
-                        return page['_links']['base'] + page['_links']['webui']
+                        try:
+                            # Try to get or create the parent page
+                            try:
+                                parent_id = self.confluence.get_page_id(self.confluence_space, "PR Analysis Reports")
+                            except Exception as e:
+                                logger.warning(f"Parent page not found, creating it: {str(e)}")
+                                parent_page = self.confluence.create_page(
+                                    space=self.confluence_space,
+                                    title="PR Analysis Reports",
+                                    body="This page contains PR analysis reports."
+                                )
+                                parent_id = parent_page['id']
+                            
+                            page = self.confluence.create_page(
+                                space=self.confluence_space,
+                                title=page_title,
+                                body=content,
+                                parent_id=parent_id
+                            )
+                            
+                            logger.info(f"Successfully created Confluence summary page: {page_title}")
+                            return page['_links']['base'] + page['_links']['webui']
+                        except Exception as e:
+                            logger.error(f"Failed to create Confluence page: {str(e)}")
+                            raise ValueError(f"Failed to create Confluence page: {str(e)}")
                     else:
                         raise ValueError("Unexpected response format from fetch_mr_details")
                 
@@ -239,17 +262,31 @@ class PRAnalyzer:
                 
                 # Create page in Confluence
                 page_title = f"MR Analysis - {mr_details['title']}"
-                parent_id = self.confluence.get_page_id(self.confluence_space, "PR Analysis Reports")
-                
-                page = self.confluence.create_page(
-                    space=self.confluence_space,
-                    title=page_title,
-                    body=content,
-                    parent_id=parent_id
-                )
-                
-                logger.info(f"Successfully created Confluence page: {page_title}")
-                return page['_links']['base'] + page['_links']['webui']
+                try:
+                    # Try to get or create the parent page
+                    try:
+                        parent_id = self.confluence.get_page_id(self.confluence_space, "PR Analysis Reports")
+                    except Exception as e:
+                        logger.warning(f"Parent page not found, creating it: {str(e)}")
+                        parent_page = self.confluence.create_page(
+                            space=self.confluence_space,
+                            title="PR Analysis Reports",
+                            body="This page contains PR analysis reports."
+                        )
+                        parent_id = parent_page['id']
+                    
+                    page = self.confluence.create_page(
+                        space=self.confluence_space,
+                        title=page_title,
+                        body=content,
+                        parent_id=parent_id
+                    )
+                    
+                    logger.info(f"Successfully created Confluence page: {page_title}")
+                    return page['_links']['base'] + page['_links']['webui']
+                except Exception as e:
+                    logger.error(f"Failed to create Confluence page: {str(e)}")
+                    raise ValueError(f"Failed to create Confluence page: {str(e)}")
             except Exception as e:
                 logger.error(f"Error storing analysis in Confluence: {str(e)}")
                 logger.error(traceback.format_exc())
