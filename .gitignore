@@ -9,6 +9,8 @@ wheels/
 # Virtual environments
 .venv
 
+#ignore environment file
 .env
 
+#ignore log file
 mcp_server.log

@@ -4,7 +4,7 @@ import traceback
 import logging
 from typing import Dict, List, Optional
 from dotenv import load_dotenv
-from gitlab_pr import GitLabPRManager
+from resources.client import GitLabPRManager
 from mcp.server.fastmcp import FastMCP
 from atlassian import Confluence
 

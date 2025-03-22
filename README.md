@@ -73,8 +73,28 @@ CONFLUENCE_SPACE=your_space_key
 
 1. Start the MCP server:
 ```bash
-python pr_analyzer.py
+python src/MRConfluenceLinker-mcp-server/server.py
 ```
+or 
+
+### Setup with Claude Desktop
+```json
+# claude_desktop_config.json
+# Can find location through:
+# Claude -> Settings -> Developer -> Edit Config
+{
+  "mcpServers": {
+      "MRConfluenceLinker": {
+          "command": "uv",
+          "args": [
+              "--directory",
+              "/<Absolute-path-to-folder>/MRConfluenceLinker/src/MRConfluenceLinker-mcp-server",
+              "run",
+              "server.py"
+          ]
+      }
+  }
+}
 
 2. The server will listen for commands through stdin/stdout. You can interact with it using prompts like:
 
@@ -136,3 +156,46 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Support
 
 For support, please [create an issue](https://github.com/CodeByWaqas/MRConfluenceLinker/issues) or contact the maintainers.
+
+## Project Structure
+
+```
+MRConfluenceLinker/
+├── src/                           # Source code directory
+│   └── MRConfluenceLinker-mcp-server/  # Main server package
+│       ├── resources/            # Resource modules
+│       │   ├── __init__.py
+│       │   ├── client.py        # Client implementation / GitLab PR integration
+│       ├── server.py            # Main server implementation
+│       └── mcp_server.log       # Server logs
+├── __pycache__/                 # Python cache files
+├── .git/                        # Git repository
+├── .gitignore                   # Git ignore rules
+├── CONTRIBUTING.md              # Contributing guidelines
+├── LICENSE                      # Project license
+├── README.md                    # Project documentation
+├── pyproject.toml              # Python project configuration
+├── requirements.txt            # Project dependencies
+└── uv.lock                     # Dependency lock file
+```
+
+### Key Components
+
+- **Source Code**: Located in the `src/MRConfluenceLinker-mcp-server/` directory
+  - `server.py`: Main MCP server implementation
+  - `resources/client.py`: Client-side implementation contains GitLab PR integration
+
+- **Configuration Files**:
+  - `requirements.txt`: Python package dependencies
+  - `pyproject.toml`: Project metadata and build configuration
+  - `uv.lock`: Locked dependency versions
+  - `.env.example`: Environment variables template
+
+- **Documentation**:
+  - `README.md`: Project overview and setup instructions
+  - `CONTRIBUTING.md`: Contribution guidelines
+  - `LICENSE`: Project license
+
+- **Development**:
+  - `__pycache__/`: Python cache files
+  - `mcp_server.log`: Server logs for debugging
