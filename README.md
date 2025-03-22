@@ -25,8 +25,8 @@ This project provides an MCP (Model Control Protocol) server that integrates Git
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd MRConfluenceLinker
+git https://github.com/CodeByWaqas/MRConfluenceLinker-mcp-server.git
+cd MRConfluenceLinker-mcp-server
 ```
 
 2. Create and activate a virtual environment:
@@ -84,11 +84,11 @@ or
 # Claude -> Settings -> Developer -> Edit Config
 {
   "mcpServers": {
-      "MRConfluenceLinker": {
+      "MRConfluenceLinker-mcp-server": {
           "command": "uv",
           "args": [
               "--directory",
-              "/<Absolute-path-to-folder>/MRConfluenceLinker/src/MRConfluenceLinker-mcp-server",
+              "/<Absolute-path-to-folder>/MRConfluenceLinker-mcp-server/src/MRConfluenceLinker-mcp-server",
               "run",
               "server.py"
           ]
@@ -155,12 +155,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Support
 
-For support, please [create an issue](https://github.com/CodeByWaqas/MRConfluenceLinker/issues) or contact the maintainers.
+For support, please [create an issue](https://github.com/CodeByWaqas/MRConfluenceLinker-mcp-server/issues) or contact the maintainers.
 
 ## Project Structure
 
 ```
-MRConfluenceLinker/
+MRConfluenceLinker-mcp-server/
 ├── src/                           # Source code directory
 │   └── MRConfluenceLinker-mcp-server/  # Main server package
 │       ├── resources/            # Resource modules

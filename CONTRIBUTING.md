@@ -46,8 +46,8 @@ Before creating an issue, please:
 
 1. Clone your fork:
    ```bash
-   git clone https://github.com/CodeByWaqas/MRConfluenceLinker.git
-   cd MRConfluenceLinker
+   git clone git@github.com:CodeByWaqas/MRConfluenceLinker-mcp-server.git
+   cd MRConfluenceLinker-mcp-server
    ```
 
 2. Set up the development environment:
@@ -153,7 +153,7 @@ feat(analyzer): add file type analysis to MR reports
 ## Project Structure
 
 ```
-MRConfluenceLinker/
+MRConfluenceLinker-mcp-server/
 ├── src/                           # Source code directory
 │   └── MRConfluenceLinker-mcp-server/  # Main server package
 │       ├── resources/            # Resource modules
